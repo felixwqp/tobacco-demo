@@ -1,5 +1,6 @@
 <template>
   <div>
+   
 
     <label class="btn btn-default">
       <input type="file" ref="file" @change="selectFile" />
@@ -7,13 +8,20 @@
     <button class="btn btn-success"  @click="fetchName">
       Upload
     </button>
+    <div class="inline-block">
+      <div v-for="(image,i) in images" :key="i" class="img">
+      <img :src="image.filename" :title="image.name" width="256" height="256" />
+    <div class="caption">{{ image.name }}</div>
+
+    </div>
+</div>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>#</th>
-      <th>2018</th>
-      <th>2017</th>
+      <th>#Tobacco</th>
+      <th>Mean(Pixel)</th>
+      <th>Variance(Pixel)</th>
     </tr>
   </thead>
   <tbody>
@@ -35,11 +43,33 @@ export default {
   data() {
     return {
       info: '',
-      selectedFiles: null
-
+      selectedFiles: null,
+      images:''
     }
   },
   methods: {
+    // loadImage() {
+    //   //  const baseURL = 'http://127.0.0.1:5000/image/';
+    //    const axiosInfo = {
+    //     method: 'get',
+    //     url: 'http://localhost:20449/api/steps',
+    //     headers: {
+    //       'Content-type': 'image/jpeg'
+    //     },
+    //     params: {
+    //       id: step.id
+    //     }
+    //  };
+    //   console.log(axiosInfo);
+    //   axios
+    //     .get(baseURL)
+    //     .then((response)=> {this.info = response.data;}
+    //           // console.log("Get Response");
+    //           // console.log(response);
+
+    //     ); 
+    
+    // },
     selectFile() {
       this.selectedFiles = this.$refs.file.files[0]['name'];
       console.log(this.selectedFiles);
@@ -49,7 +79,14 @@ export default {
       console.log(baseURL);
       axios
         .get(baseURL)
-        .then((response)=> {this.info = response.data;}
+        .then((response)=> {
+          console.log(response.data);
+          this.info = response.data['response'];
+          this.images = response.data['files_info'];
+          for (var i = 0; i < this.images.length; i++) {
+            this.images[i]['filename'] = 'http://127.0.0.1:5000/static/' + this.images[i]['filename']; 
+          }
+        }
               // console.log("Get Response");
               // console.log(response);
 

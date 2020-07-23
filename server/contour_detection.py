@@ -1,10 +1,11 @@
 
 import cv2 as cv
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
 from skimage import morphology,draw
 from skimage.morphology import medial_axis
 from collections import defaultdict
+# import scipy.misc
 # from remove_burr import Clain
 
 """
@@ -52,6 +53,7 @@ def start(image):
     # plt.imshow(image)
     # plt.title('Origin Image')
     # plt.show()
+    images = []
 
     # convert to RGB
     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
@@ -62,8 +64,11 @@ def start(image):
     _, binary = cv.threshold(gray, 225, 255, cv.THRESH_BINARY_INV)
     # show it
     # plt.imshow(binary, cmap="gray")
+    # plt.savefig('testplot.png')
     # plt.title('Binary Image')
     # plt.show()
+    # cv.imwrite("binary.png", binary)
+    images.append({'name':'binary version', 'filename':'binary.png', 'file':binary})
 
     # find the contours from the thresholded image
     contours, hierarchy = cv.findContours(binary, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
@@ -83,6 +88,7 @@ def start(image):
     # plt.imshow(contour_image)
     # plt.title('Origin Contour Image')
     # plt.show()
+    images.append({'name':'origin contour', 'filename':'contour_init.png', 'file':contour_image})
 
     new_contours = []
 
@@ -111,6 +117,7 @@ def start(image):
     # plt.imshow(image)
     # plt.title('Selected Contours')
     # plt.show()
+    images.append({'name':'selected contour', 'filename':'contour_selected.png', 'file':image})
     # convert to RGB
     image = cv.cvtColor(image, cv.COLOR_BGR2RGB)
     # convert to grayscale
@@ -127,6 +134,7 @@ def start(image):
     # plt.imshow(gray)
     # # plt.title('Edge Refined Contours')
     # plt.show()
+    images.append({'name':'refined contour', 'filename':'contour_refined.png', 'file':gray})
 
     # plt.imshow(gray1)
     # plt.show()
@@ -160,6 +168,8 @@ def start(image):
 
     # plt.imshow(skel_erode_10)
     # plt.title('Processed Skeleton')
+    # images.append({'name':'processed skeleton', 'filename':'skel_processed.png', 'file':skel_erode_10})
+
     # plt.show()
 
     dist_on_skel = distance * skel_erode_10
@@ -215,7 +225,8 @@ def start(image):
 
     # plt.title('Skeleton in Gray Image')
     # plt.show()
-    return response
+    result = {'response':response, 'files_info':images}
+    return result
     #
 
 
