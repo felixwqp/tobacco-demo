@@ -12,8 +12,8 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>2018</th>
-      <th>2017</th>
+      <th>Mean</th>
+      <th>Var</th>
     </tr>
   </thead>
   <tbody>
@@ -27,6 +27,8 @@
 </div>
 
 </template>
+
+
 
 <script>
 import axios from 'axios';
