@@ -214,7 +214,7 @@ def start(image):
         # print(point)
         stats = get_stats(points[point])
         print("Mean:", stats[0], "Var:", stats[1])
-        response.append({'mean':stats[0], 'var':stats[1]})
+        response.append({'mean':stats[0]*2, 'var':stats[1]*4 })
     print('=====================================')
     # extent = np.min(x), np.max(x), np.min(y), np.max(y)
     # fig = plt.figure(frameon=False)
