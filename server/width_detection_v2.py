@@ -20,8 +20,8 @@ def midpoint(ptA, ptB):
 	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
 
-if __name__ == "__main__":
-    # load the image, convert it to grayscale, and blur it slightly
+def width_detect():
+     # load the image, convert it to grayscale, and blur it slightly
     width = []
     length = []
 
@@ -148,4 +148,9 @@ if __name__ == "__main__":
     print(mean_width)
     print(np.nanvar(width))
     plt.hist(width)
+    return mean_width, np.nanvar(width)
     # plt.show()
+
+
+if __name__ == "__main__":
+   width_detect()

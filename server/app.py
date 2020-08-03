@@ -22,7 +22,7 @@ def hello(filename):
     image = cv.imread(filename)
     print(filename)
     print("!!!")
-    res = start_dense()
+    res = start_dense(filename)
     new_info = save_images(res['files_info'], filename)
     res['files_info'] = new_info
     print(res)
