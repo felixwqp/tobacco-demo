@@ -2,35 +2,18 @@ from flask import Flask, send_file
 import flask
 from contour_detection import start
 import cv2 as cv
-from PIL import Image
-from dense import start_dense
-import numpy as np
-import io
-import os
-import glob
+from os import getcwd
 
-import flickrapi
-import csv
-import requests
+app = Flask(__name__, static_url_path='/static')
 
-# api_key = '68d7cbd37b544fb8cb4c5049c87064f3'
-# api_secret = '9322150cc690156f'
-# flickr = flickrapi.FlickrAPI(api_key, api_secret)
-# flickr.authenticate_via_browser(perms='delete')
+def save_images(images_info, filename):
+    new_infos = []
+    for info in images_info:
+        cv.imwrite(getcwd() + "/static/" + filename + "_" + info['filename'], info['file'])
+        new_infos.append({'name': info['name'], 'filename':filename+"_"+info['filename']})
+    
+    return new_infos
 
-# def uploadPhoto(path_photo, title, description, tags):
-#     result=False
-#     with open(path_photo, 'rb') as f:
-#         photo = {'file': f}
-#         try:    
-#             result = requests.post('https://up.flickr.com/services/upload/', data = {'photo':'photo', 'title':'title', 'description':'description', 'tags':'tags'})
-#             print(result.text)
-#         except Exception as error:
-#             print('Upload photo', error, '--- o --- titulo malo -> ', title)        
-#     return result
-
-
-app = Flask(__name__)
 
 
 # @app.route('/name/<filename>', methods=['GET'])
@@ -52,7 +35,10 @@ def hello(filename):
     image = cv.imread(filename)
     print(filename)
     print("!!!")
-    # start_dense()
+    res =start(image)
+    new_info = save_images(res['files_info'], filename)
+    res['files_info'] = new_info
+    print(res)
     # res = {"a":"b"}
     imgs = glob.glob(os.path.join("Width", "*.jpg"))
     results = list()
