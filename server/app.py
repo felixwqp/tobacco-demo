@@ -1,4 +1,4 @@
-from flask import Flask, send_file
+from flask import Flask
 import flask
 from contour_detection import start
 import cv2 as cv
@@ -16,20 +16,6 @@ def save_images(images_info, filename):
 
 
 
-# @app.route('/name/<filename>', methods=['GET'])
-# def hello(filename):
-#     image = cv.imread(filename)
-#     print(filename)
-#     print("!!!")
-#     res =start(image)
-#     print(res)
-#     # res = {"a":"b"}
-#     response = flask.jsonify(res)
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-
-#     return response
-#     # return "Hello World!"
-
 @app.route('/name/<filename>', methods=['GET'])
 def hello(filename):
     image = cv.imread(filename)
@@ -40,14 +26,11 @@ def hello(filename):
     res['files_info'] = new_info
     print(res)
     # res = {"a":"b"}
-    imgs = glob.glob(os.path.join("Width", "*.jpg"))
-    results = list()
-    for idx, img in enumerate(imgs):
-        results.append({"path": os.path.abspath(img), "id": idx})
-    response = flask.jsonify(results)
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    response = flask.jsonify(res)
+    response.headers.add('Access-Control-Allow-Origin', '*')
 
+    return response
+    # return "Hello World!"
 
 if __name__ == '__main__':
     app.run()

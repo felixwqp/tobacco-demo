@@ -28,7 +28,7 @@ def start(image):
     gray = cv.cvtColor(image, cv.COLOR_RGB2GRAY)
 
     # create a binary thresholded image
-    _, binary = cv.threshold(gray, 225, 255, cv.THRESH_BINARY_INV)
+    _, binary = cv.threshold(gray, 100, 255, cv.THRESH_BINARY_INV)
 
     images.append({'name':'binary version', 'filename':'binary.png', 'file':binary})
 

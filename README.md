@@ -12,11 +12,12 @@ in server folder:
 
 python3 -m venv env 
 
+pip3 install -r requirements.txt 
+
 source env/bin/activate 
 (每次重新打开可能需要这个命令)
 
-
-pip3 install -r requirements.txt 
+python3 app.py      
 
 
 
